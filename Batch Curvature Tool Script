@@ -1,0 +1,26 @@
+#Madeline Schwarz
+#5/11/2020
+
+#Description:
+#Creates curvature maps of rasters (DEMs in .TIFs) in a specific folder and renames them 
+#original DEM tiles had names of "IslandsDEMv0_2x2m_zmasl_isn2016_47.tif"; script creates a curvature map of the tile and names it "tile47curv.tif"
+#I used this to make a bunch of curvature maps of tiles from the Arctic DEM version 7: (http://atlas.lmi.is/mapview/?application=DEM)
+#Script was run by entering "execfile(file location)" in Arcmap python window
+
+import arcpy
+from arcpy import env
+
+inFolder = "D:\NLSdataV7\TIFF Files"            #defines input folder as location of DEM TIFs
+arcpy.CheckOutExtension("Spatial")              #enables the spatial analyst extension 
+arcpy.env.workspace = inFolder            #sets arcpy environment to be folder with rasters
+
+RasterList = arcpy.ListRasters("*", "TIF")    # creates a list of rasters in the input folder composed of the rasters in the folder
+                                              # "*" indicates no string values, "TIF" identifies type of raster
+for rasters in RasterList:
+    inRaster = arcpy.Describe(rasters).baseName     # gets the name of each raster file
+    inRasterName = inRaster.replace("IslandsDEMv0_2x2m_zmasl_isn2016_","")    # removes the long name of original file, keeps number at the end defining DEM tile
+    z_factor = 1                                                              # x,y,z all in meters so z factor of 1
+    outRasterName = inFolder + "\\" + "tile" + inRasterName + "curv"          # renames output curve map using tile number from original DEM
+    arcpy.Curvature_3d(rasters, outRasterName, z_factor)                      # runs Curvature tool from 3D analyst 
+    
+    
