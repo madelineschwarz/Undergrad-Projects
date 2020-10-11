@@ -1,0 +1,13 @@
+# How to Normalize a raster file using Map Algebra in ArcGIS Desktop
+# Example converts a raster of values ranging from -14 to 296 to an output raster with values from 0 to 12
+# May need to calculate statistics for Raster before running to avoid Error 000539
+
+import arcpy
+arcpy.CheckOutExtension("Spatial")
+
+Input_Ras = Raster("raster.tif") # input path to raster data
+min_Ras = Raster(Input_ras).minimum # finds min value from data
+max_Ras = Raster(Output_ras).maximum # finds max value from data
+
+Norm_Ras = ((Input_Ras - min_Ras)*12)/(max_Ras - min_Ras ) # calculation normalzing data
+Norm_Ras.save("\ProjectFolder") # saves output raster
