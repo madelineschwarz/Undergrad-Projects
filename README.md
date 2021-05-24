@@ -1,3 +1,3 @@
-# geopyprojects
+# undergrad-projects
 
 miscellaneous python and arcpy scripts
