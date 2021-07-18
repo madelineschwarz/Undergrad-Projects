@@ -1,3 +1,3 @@
 # undergrad-projects
 
-miscellaneous python and arcpy scripts
+coding projects and scripts from studies @ CU Boulder
